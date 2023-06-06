@@ -5,7 +5,6 @@ import {
 } from "@openmrs/esm-framework";
 import { configSchema } from "./config-schema";
 import patientDashboardsConfig from "./namibia-esm-and-dashboards-config.json";
-import namibiaDashboardsConfig from "./namibia-config";
 
 declare var __VERSION__: string;
 const version = __VERSION__;
@@ -31,21 +30,41 @@ function setupOpenMRS() {
   };
 
   defineConfigSchema(moduleName, configSchema);
-
   provide(patientDashboardsConfig);
-  // provide(namibiaDashboardsConfig);
 
   return {
-    pages: [],
+    pages: [
+      {
+        load: getAsyncLifecycle(() => import("./root"), options),
+        route: "namibia-home",
+      },
+    ],
     extensions: [
-      // {
-      //   name: "Red box",
-      //   load: getAsyncLifecycle(
-      //     () => import("./boxes/extensions/red-box"),
-      //     options
-      //   ),
-      //   slot: "Boxes",
-      // },
+      {
+        id: "my-extension",
+        slot: "namibia-home-dashboard",
+        load: getAsyncLifecycle(() => import("./components/demo-extension"), {
+          featureName: "extensions-demo",
+          moduleName,
+        }),
+      },
+      {
+        id: "my-extension-2",
+        slot: "namibia-home-dashboard",
+        load: getAsyncLifecycle(() => import("./components/demo-extension"), {
+          featureName: "extensions-demo-2",
+          moduleName,
+        }),
+      },
+      ,
+      {
+        id: "sam-jovan",
+        slot: "patient-chart-summary-dashboard-slot",
+        load: getAsyncLifecycle(() => import("./components/sam-jovan"), {
+          featureName: "sam-jovan",
+          moduleName,
+        }),
+      },
     ],
   };
 }

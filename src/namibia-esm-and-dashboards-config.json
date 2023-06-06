@@ -3,7 +3,6 @@
     "extensionSlots": {
       "patient-chart-dashboard-slot": {
         "remove": [
-          "charts-summary-dashboard",
           "immunization-summary-dashboard",
           "medications-summary-dashboard",
           "encounters-summary-dashboard",
@@ -44,11 +43,37 @@
         "searchAddress": "Search Country - District",
         "region": "Region"
       }
-    }
+    },
+    "fieldDefinitions": [
+      {
+        "id": "nextOfKinName",
+        "label": "Next of Kin",
+        "type": "person attribute", 
+        "uuid": "dc0cf7a8-dede-4c3d-9db4-730900aedd1a",
+        "showHeading": false,
+        "validation": {
+          "required": true
+        }
+      }
+    ],
+    "sections": ["demographics", "contact", "relationships", "Heroes"],
+    "sectionDefinitions": [
+        { "id": "contact", "name": "Contacts", "fields": ["phone", "nextOfKinName"] },
+        {"id": "Heroes", "name": "Hero", "fields":[]}  
+    ]
   },
+
   "@openmrs/esm-styleguide": {
     "Brand color #1": "#1A3054",
     "Brand color #2": "#131E35",
     "Brand color #3": "#0078A6"
+  },
+  "@ohri/esm-namibia-emr-app": {
+    "extensionSlots": {
+      "namibia-home-dashboard": {
+        "add": ["clinical-appointments-dashboard"]
+      }
+    }
   }
+  
 }
